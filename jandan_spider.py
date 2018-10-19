@@ -1,6 +1,5 @@
 import os
 import requests
-from urllib import parse
 from bs4 import BeautifulSoup
 import base64
 from threading import Thread
@@ -19,7 +18,7 @@ def save_jpg(res_url):
     html = BeautifulSoup(requests.get(res_url, headers=headers).text, 'html.parser')
     for link in html.find_all('span', {'class': 'img-hash'}):
         imgurl = "http:" + str(base64.b64decode(link.text),'utf-8')
-        file_name = os.path.basename(parse.urlparse(imgurl).path)
+        file_name = os.path.basename(imgurl)
         file_name = os.path.join(OUTPUT_DIR, file_name)
         try:
             r = requests.get(imgurl, headers=headers)
